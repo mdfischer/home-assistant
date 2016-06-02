@@ -20,8 +20,8 @@ import homeassistant.util.dt as date_util
 import homeassistant.util.location as loc_util
 import homeassistant.util.package as pkg_util
 from homeassistant.const import (
-    CONF_CUSTOMIZE, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME,
-    CONF_TEMPERATURE_UNIT, CONF_TIME_ZONE, EVENT_COMPONENT_LOADED,
+    CONF_CUSTOMIZE, CONF_LATITUDE, CONF_LONGITUDE, CONF_ELEVATION,
+    CONF_NAME, CONF_TEMPERATURE_UNIT, CONF_TIME_ZONE, EVENT_COMPONENT_LOADED,
     TEMP_CELSIUS, TEMP_FAHRENHEIT, PLATFORM_FORMAT, __version__)
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import (
@@ -405,6 +405,7 @@ def process_ha_core_config(hass, config):
 
     for key, attr in ((CONF_LATITUDE, 'latitude'),
                       (CONF_LONGITUDE, 'longitude'),
+                      (CONF_ELEVATION, 'elevation'),
                       (CONF_NAME, 'location_name')):
         if key in config:
             setattr(hac, attr, config[key])
@@ -435,6 +436,9 @@ def process_ha_core_config(hass, config):
     if hac.latitude is None and hac.longitude is None:
         hac.latitude = info.latitude
         hac.longitude = info.longitude
+
+    if hac.elevation is None:
+        hac.elevation = 0
 
     if hac.temperature_unit is None:
         if info.use_fahrenheit:

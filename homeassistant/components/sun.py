@@ -88,6 +88,7 @@ def setup(hass, config):
 
     latitude = util.convert(hass.config.latitude, float)
     longitude = util.convert(hass.config.longitude, float)
+    elevation = util.convert(hass.config.elevation, float)
     errors = []
 
     if latitude is None:
@@ -105,10 +106,6 @@ def setup(hass, config):
         return False
 
     platform_config = config.get(DOMAIN, {})
-
-    elevation = platform_config.get(CONF_ELEVATION)
-    if elevation is None:
-        elevation = location_util.elevation(latitude, longitude)
 
     from astral import Location
 

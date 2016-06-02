@@ -54,15 +54,11 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     """Setup the Yr.no sensor."""
     latitude = config.get(CONF_LATITUDE, hass.config.latitude)
     longitude = config.get(CONF_LONGITUDE, hass.config.longitude)
-    elevation = config.get(CONF_ELEVATION)
+    elevation = config.get(CONF_ELEVATION, hass.config.elevation)
 
     if None in (latitude, longitude):
         _LOGGER.error("Latitude or longitude not set in Home Assistant config")
         return False
-
-    if elevation is None:
-        elevation = location.elevation(latitude,
-                                       longitude)
 
     coordinates = dict(lat=latitude,
                        lon=longitude,

@@ -26,6 +26,8 @@ latitude = vol.All(vol.Coerce(float), vol.Range(min=-90, max=90),
                    msg='invalid latitude')
 longitude = vol.All(vol.Coerce(float), vol.Range(min=-180, max=180),
                     msg='invalid longitude')
+elevation = vol.All(vol.Coerce(float), vol.Range(min=0, max=10000),
+                    msg='invalid elevation (min=0, max=10000 meters)')
 sun_event = vol.All(vol.Lower, vol.Any(SUN_EVENT_SUNSET, SUN_EVENT_SUNRISE))
 
 
